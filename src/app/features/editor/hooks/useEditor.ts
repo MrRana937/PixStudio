@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react'
 import { useRef } from 'react'
 import { fabric } from 'fabric'
+import { init } from 'next/dist/compiled/webpack/webpack'
 
 export const useEditor = () => {
 
