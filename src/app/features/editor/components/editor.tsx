@@ -16,7 +16,7 @@ export default function Editor() {
       
       
      useEffect(() => {
-      console.log("init");
+      console.log("effect triggerd");
        const canvas = new fabric.Canvas(canvasRef.current, {
          controlsAboveOverlay: true,
          preserveObjectStacking: true,
