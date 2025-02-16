@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button"
 import { ChevronDown, Download, Ghost, MousePointerClick, Redo2, Undo2 } from 'lucide-react'
 import { CiFileOn } from 'react-icons/ci'
 import { Hint } from "@/components/customui/hint"
+import { ActiveTool } from "@/app/features/editor/types"
+import { cn } from "@/lib/utils"
 
 import {
   DropdownMenu,
@@ -16,9 +18,20 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Separator } from "@/components/ui/separator"
 import { BsCloudCheck } from "react-icons/bs"
+import { useState } from "react"
+
+interface NavbarProps{
+  activeTool:ActiveTool,
+  onChangeActiveTool:(tool:ActiveTool)=> void
+}
 
 
-export const Navbar = () => {
+
+export const Navbar = ({
+  activeTool,
+  onChangeActiveTool
+}:NavbarProps) => {
+
   return (
     <nav className="w-full flex items-center p-4 h-[68px] gap-x-8 border-b lg:pl-[34px]">
       <Logo />
@@ -50,8 +63,10 @@ export const Navbar = () => {
           <Button
             size="icon"
             variant="ghost"
-            onClick={() => {}} //todo click
-            className="" //add dynamic class later
+            onClick={() => onChangeActiveTool("select")}
+            className={cn(
+             activeTool==="select"&&"bg-gray-100" 
+            )} 
           >
             <MousePointerClick className="size-4" />
           </Button>
