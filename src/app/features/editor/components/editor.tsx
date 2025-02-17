@@ -8,6 +8,7 @@ import { Sidebar } from "@/app/features/editor/components/sidebar";
 import { Toolbar } from '@/app/features/editor/components/toolbar'
 import { Footer } from '@/app/features/editor/components/footer'
 import { ActiveTool } from "../types";
+import { ShapeSideBar } from "./shape-sidebar";
 
 export default function Editor() {
 
@@ -59,6 +60,10 @@ export default function Editor() {
         />
         <div className="absolute h-[calc(100%-68px)] w-full top-[68px] flex">
           <Sidebar 
+          activeTool={activeTool}
+          onChangeActiveTool={onChangeActiveTool}
+          />
+          <ShapeSideBar
           activeTool={activeTool}
           onChangeActiveTool={onChangeActiveTool}
           />
