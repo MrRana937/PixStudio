@@ -1,9 +1,15 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useRef } from 'react'
 import { fabric } from 'fabric'
 import { init } from 'next/dist/compiled/webpack/webpack'
+import { useAutoResize } from './useAutoResize'
 
 export const useEditor = () => {
+
+        const [canvas, setCanvas] = useState<null | fabric.Canvas>(null)
+        const [container, setContainer] = useState<HTMLDivElement | null>(null)
+
+    useAutoResize({canvas,container});
 
     const init = useCallback( ({
         initialCanvas,
@@ -24,8 +30,8 @@ export const useEditor = () => {
     })
 
     const initialWorkspace= new fabric.Rect({
-     width:1000,
-     height:1200,
+     width:900,
+     height:1000,
      name:"clip",
      fill:"white",
      selectable:false,
@@ -43,6 +49,10 @@ export const useEditor = () => {
     initialCanvas.centerObject(initialWorkspace) ;
     initialCanvas.clipPath=initialWorkspace;
     
+    setCanvas(initialCanvas);
+    setContainer(initialContainer);
+
+
     const test = new fabric.Rect({
         height:100,
         width:100,

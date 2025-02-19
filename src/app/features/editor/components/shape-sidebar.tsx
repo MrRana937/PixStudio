@@ -28,7 +28,7 @@ onChangeActiveTool("select");
   return (
     <aside
       className={cn(
-        'bg-white relative flex flex-col h-full w-[290px] border-r z-[40]',
+        'bg-white relative flex flex-col h-full w-[360px] border-r z-[40]',
         activeTool === 'shapes' ? 'visible' : 'hidden'
       )}
     >
