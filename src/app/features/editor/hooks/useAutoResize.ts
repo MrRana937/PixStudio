@@ -67,25 +67,25 @@ export const useAutoResize = ({canvas,container}:useAutoResizeProps) => {
 
     //detects the resizing of our container div whenever its size changes on the screens 
     useEffect(() => {
-        console.log("Effect running with:", { canvas, container });
+        // console.log("Effect running with:", { canvas, container });
         
         if (!canvas || !container) {
-            console.log("Skipping effect - dependencies not ready");
+            // console.log("Skipping effect - dependencies not ready");
             return;
         }
 
-        console.log("Setting up ResizeObserver");
+        // console.log("Setting up ResizeObserver");
         let resizeObserver: ResizeObserver | null = null;
 
         resizeObserver = new ResizeObserver(() => {
-            console.log("resizing");
+            // console.log("resizing");
             autoZoom();
         });
 
         resizeObserver.observe(container);
 
         return () => {
-            console.log("Cleaning up ResizeObserver");
+            // console.log("Cleaning up ResizeObserver");
             if (resizeObserver) {
                 resizeObserver.disconnect();
             }

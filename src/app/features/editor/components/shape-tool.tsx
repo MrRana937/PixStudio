@@ -19,9 +19,10 @@ icon:Icon,
 iconClassName
 }:ShapeToolProps)=>{
 
+
     return (
         <button 
-        onClick={()=>onClick}
+        onClick={onClick}
         className="aspect-square rounded-md p-4 border"
         >
         <Icon className={cn("h-full w-full ",iconClassName)}/>

@@ -29,14 +29,14 @@ export default function Editor() {
    setActiveTool(tool)
   }, [activeTool])
 
-    const { init } = useEditor()
+    const { init,editor } = useEditor()
 
       const canvasRef = useRef(null)
       const containerRef = useRef<HTMLDivElement>(null)
       
       
      useEffect(() => {
-      console.log("effect triggerd");
+      // console.log("effect triggerd");
        const canvas = new fabric.Canvas(canvasRef.current, {
          controlsAboveOverlay: true,
          preserveObjectStacking: true,
@@ -64,6 +64,7 @@ export default function Editor() {
           onChangeActiveTool={onChangeActiveTool}
           />
           <ShapeSideBar
+          editor={editor}
           activeTool={activeTool}
           onChangeActiveTool={onChangeActiveTool}
           />
