@@ -23,7 +23,6 @@ activeTool,
 onChangeActiveTool
 }:ShapeSideBarProps) => {
 
-  console.log('editor',editor);
 
 const onClose=()=>{
 onChangeActiveTool("select");

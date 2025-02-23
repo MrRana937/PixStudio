@@ -139,7 +139,7 @@ return {
     )
     addToCanvas(object)
   },
-  
+  canvas,
   fillColor,
   strokeColor,
   strokeWidth,

@@ -52,28 +52,38 @@ export default function Editor() {
        }
      }, [init])
 
+     console.log("editor renderd");
     return (
       <div className="h-full flex flex-col">
-        <Navbar 
-        activeTool={activeTool}
-        onChangeActiveTool={onChangeActiveTool}
+        <Navbar
+          activeTool={activeTool}
+          onChangeActiveTool={onChangeActiveTool}
         />
         <div className="absolute h-[calc(100%-68px)] w-full top-[68px] flex">
-          <Sidebar 
-          activeTool={activeTool}
-          onChangeActiveTool={onChangeActiveTool}
+          <Sidebar
+            activeTool={activeTool}
+            onChangeActiveTool={onChangeActiveTool}
           />
           <ShapeSideBar
-          editor={editor}
-          activeTool={activeTool}
-          onChangeActiveTool={onChangeActiveTool}
+            editor={editor}
+            activeTool={activeTool}
+            onChangeActiveTool={onChangeActiveTool}
           />
           <main className=" bg-muted flex-1 overflow-auto relative flex flex-col">
-            <Toolbar/>
-            <div className="flex-1 h-[calc(100%-124px)] bg-muted" ref={containerRef}>
+            <Toolbar
+              editor={editor}
+              activeTool={activeTool}
+              onChangeActiveTool={onChangeActiveTool}
+              //why key becuase everytime active object changes toolbar will be rerenderd so new key for react for reconciliation
+              key={JSON.stringify(editor?.canvas.getActiveObject())}
+            />
+            <div
+              className="flex-1 h-[calc(100%-124px)] bg-muted"
+              ref={containerRef}
+            >
               <canvas ref={canvasRef} />
             </div>
-            <Footer/>
+            <Footer />
           </main>
         </div>
       </div>
