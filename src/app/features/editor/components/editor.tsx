@@ -7,8 +7,9 @@ import {Navbar} from '@/app/features/editor/components/navbar';
 import { Sidebar } from "@/app/features/editor/components/sidebar";
 import { Toolbar } from '@/app/features/editor/components/toolbar'
 import { Footer } from '@/app/features/editor/components/footer'
-import { ActiveTool } from "../types";
+import { ActiveTool, selectiondDependentTools } from "../types";
 import { ShapeSideBar } from "./shape-sidebar";
+import { FillColorSideBar } from "./fill-color-sidebar";
 
 export default function Editor() {
 
@@ -29,7 +30,19 @@ export default function Editor() {
    setActiveTool(tool)
   }, [activeTool])
 
-    const { init,editor } = useEditor()
+  
+  const onClearSelectoin=useCallback(()=>{
+      console.log(activeTool);
+     if(selectiondDependentTools.includes(activeTool))
+     {
+     setActiveTool("select");
+     }
+  },[activeTool])
+
+
+    const { init, editor } = useEditor({
+      clearSelectionCallback: onClearSelectoin,
+    })
 
       const canvasRef = useRef(null)
       const containerRef = useRef<HTMLDivElement>(null)
@@ -65,6 +78,11 @@ export default function Editor() {
             onChangeActiveTool={onChangeActiveTool}
           />
           <ShapeSideBar
+            editor={editor}
+            activeTool={activeTool}
+            onChangeActiveTool={onChangeActiveTool}
+          />
+          <FillColorSideBar
             editor={editor}
             activeTool={activeTool}
             onChangeActiveTool={onChangeActiveTool}

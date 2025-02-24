@@ -17,16 +17,20 @@ export const Toolbar=({
     onChangeActiveTool
 }:ToolBarProps)=>{
 
-  const selectedObject=editor?.canvas.getActiveObject();
+//   const selectedObject=editor?.canvas.getActiveObject();
 
-  const getProperty=(property:any)=>{
-    if(!selectedObject)
-        return null;
-    return selectedObject.get(property);
-  }
+//   const getProperty=(property:any)=>{
+//     if(!selectedObject)
+//         return null;
+//     return selectedObject.get(property);
+//   }
 
-  const fillColor= getProperty("fill");
+//   const fillColor= getProperty("fill");
 
+     const fillColor=editor?.getActiveFillColor();
+//   console.log(typeof(fillColor),fillColor);
+
+console.log("fillcolro is",fillColor);
     return (
       <div className="shrink-0 h-[56px] border-b bg-white w-full flex items-center overflow-x-auto z-[49] p-2 gap-x-2">
         <div className="flex items-center h-full justify-center">

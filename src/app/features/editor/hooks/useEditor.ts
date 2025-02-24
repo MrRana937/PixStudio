@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { useRef } from 'react'
 import { fabric } from 'fabric'
 import { useAutoResize } from './useAutoResize'
-import { BuildEditorProps, CIRCLE_OPTIONS, DIAMOND_OPTIONS, Editor, FILL_COLOR, RECTANGLE_OPTIONS, STROKE_COLOR, STROKE_WIDTH, TRIANGLE_OPTIONS } from '@/app/features/editor/types'
+import { BuildEditorProps, CIRCLE_OPTIONS, DIAMOND_OPTIONS, Editor, EditorHookProps, FILL_COLOR, RECTANGLE_OPTIONS, STROKE_COLOR, STROKE_WIDTH, TRIANGLE_OPTIONS } from '@/app/features/editor/types'
 import { useCanvasEvents } from './useCanvasEvents'
 import { isTextType } from '@/app/features/editor/utils'
 
@@ -13,7 +13,8 @@ strokeColor,
 strokeWidth,
 setFillColor,
 setStrokeColor,
-setStrokeWidth
+setStrokeWidth,
+selectedObjects
 }:BuildEditorProps):Editor=>{
 
 const getWorkspace=()=>{
@@ -42,11 +43,18 @@ canvas.add(object);
 canvas.setActiveObject(object);
 }
 
-    console.log("inside");
+    // console.log("inside");
 return {
   changeFillColor: (value: string) => {
+    console.log("inside changefillcolor")
+    console.log(value);
     setFillColor(value)
-    canvas.getActiveObjects().forEach((object) => object.set({ fill: value }))
+    canvas.getActiveObjects().forEach((object) => {
+      console.log("inside foreach",object);
+      console.log(value);
+      object.set({ fill: value })})
+
+      canvas.renderAll();
   },
 
   changeStrokeWidth: (value: number) => {
@@ -54,6 +62,7 @@ return {
     canvas
       .getActiveObjects()
       .forEach((object) => object.set({ strokeWidth: value }))
+         canvas.renderAll()
   },
   changeStrokeColor: (value: string) => {
     setStrokeColor(value)
@@ -64,6 +73,7 @@ return {
       }
       object.set({ stroke: value })
     })
+       canvas.renderAll()
   },
 
   addCircle: () => {
@@ -71,6 +81,9 @@ return {
 
     const object = new fabric.Circle({
       ...CIRCLE_OPTIONS,
+      fill: selectedObjects[0]?.get('fill') as string  ?? fillColor,
+      strokeWidth: strokeWidth,
+      stroke: strokeColor,
     })
 
     addToCanvas(object)
@@ -81,18 +94,27 @@ return {
       ...RECTANGLE_OPTIONS,
       rx: 10,
       ry: 10,
+      fill: selectedObjects[0]?.get('fill') as string  ?? fillColor,
+      strokeWidth: strokeWidth,
+      stroke: strokeColor,
     })
     addToCanvas(object)
   },
   addRectangle: () => {
     const object = new fabric.Rect({
       ...RECTANGLE_OPTIONS,
+      fill: selectedObjects[0]?.get('fill') as string  ?? fillColor,
+      strokeWidth: strokeWidth,
+      stroke: strokeColor,
     })
     addToCanvas(object)
   },
   addTriangle: () => {
     const object = new fabric.Triangle({
       ...TRIANGLE_OPTIONS,
+      fill: selectedObjects[0]?.get('fill') as string  ?? fillColor,
+      strokeWidth: strokeWidth,
+      stroke: strokeColor,
     })
     addToCanvas(object)
   },
@@ -118,6 +140,9 @@ return {
       ],
       {
         ...TRIANGLE_OPTIONS,
+        fill: selectedObjects[0]?.get('fill') as string  ?? fillColor,
+        strokeWidth: strokeWidth,
+        stroke: strokeColor,
       }
     )
     addToCanvas(object)
@@ -135,21 +160,37 @@ return {
       ],
       {
         ...DIAMOND_OPTIONS,
+        fill: selectedObjects[0]?.get('fill') as string  ?? fillColor,
+        strokeWidth: strokeWidth,
+        stroke: strokeColor,
       }
     )
     addToCanvas(object)
   },
   canvas,
-  fillColor,
+  getActiveFillColor:()=>{
+  const selectedObject=selectedObjects.at(-1);
+  
+  if(!selectedObject)
+    return fillColor;
+
+  const value = selectedObject.get('fill') || fillColor
+
+  //currenlty gradients and patterns are not supported as our method rgbatostring is converting to strings 
+  return value as string
+
+  },
+
   strokeColor,
   strokeWidth,
+  selectedObjects
 }
 
 
 
 }
 
-export const useEditor = () => {
+export const useEditor = ({clearSelectionCallback}:EditorHookProps) => {
 
         const [canvas, setCanvas] = useState<null | fabric.Canvas>(null)
         const [container, setContainer] = useState<HTMLDivElement | null>(null)
@@ -162,12 +203,13 @@ export const useEditor = () => {
 
     useCanvasEvents({
         canvas,
-        setSelectedObjects
+        setSelectedObjects,
+        clearSelectionCallback
     });
 
     const editor = useMemo(() => {
       if (canvas) {
-        // console.log("here");
+        console.log("here inside memo");
         return buildEditor({
           canvas,
           fillColor,
@@ -176,10 +218,11 @@ export const useEditor = () => {
           setFillColor,
           setStrokeColor,
           setStrokeWidth,
+          selectedObjects
         })
       }
       return undefined
-    }, [canvas, fillColor, strokeColor, strokeWidth])
+    }, [canvas, fillColor, strokeColor, strokeWidth,selectedObjects])
 
     const init = useCallback( ({
         initialCanvas,
