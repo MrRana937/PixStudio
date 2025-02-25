@@ -10,6 +10,7 @@ import { Footer } from '@/app/features/editor/components/footer'
 import { ActiveTool, selectiondDependentTools } from "../types";
 import { ShapeSideBar } from "./shape-sidebar";
 import { FillColorSideBar } from "./fill-color-sidebar";
+import { StrokeColorSideBar } from "./stroke-color-sidebar";
 
 export default function Editor() {
 
@@ -83,6 +84,11 @@ export default function Editor() {
             onChangeActiveTool={onChangeActiveTool}
           />
           <FillColorSideBar
+            editor={editor}
+            activeTool={activeTool}
+            onChangeActiveTool={onChangeActiveTool}
+          />
+          <StrokeColorSideBar
             editor={editor}
             activeTool={activeTool}
             onChangeActiveTool={onChangeActiveTool}

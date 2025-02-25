@@ -83,7 +83,7 @@ return {
       ...CIRCLE_OPTIONS,
       fill: selectedObjects[0]?.get('fill') as string  ?? fillColor,
       strokeWidth: strokeWidth,
-      stroke: strokeColor,
+      stroke: selectedObjects[0]?.get('stroke') as string  ?? strokeColor,
     })
 
     addToCanvas(object)
@@ -96,7 +96,7 @@ return {
       ry: 10,
       fill: selectedObjects[0]?.get('fill') as string  ?? fillColor,
       strokeWidth: strokeWidth,
-      stroke: strokeColor,
+      stroke: selectedObjects[0]?.get('stroke') as string  ?? strokeColor,
     })
     addToCanvas(object)
   },
@@ -105,7 +105,7 @@ return {
       ...RECTANGLE_OPTIONS,
       fill: selectedObjects[0]?.get('fill') as string  ?? fillColor,
       strokeWidth: strokeWidth,
-      stroke: strokeColor,
+      stroke: selectedObjects[0]?.get('stroke') as string  ?? strokeColor,
     })
     addToCanvas(object)
   },
@@ -114,7 +114,7 @@ return {
       ...TRIANGLE_OPTIONS,
       fill: selectedObjects[0]?.get('fill') as string  ?? fillColor,
       strokeWidth: strokeWidth,
-      stroke: strokeColor,
+      stroke: selectedObjects[0]?.get('stroke') as string  ?? strokeColor,
     })
     addToCanvas(object)
   },
@@ -142,7 +142,7 @@ return {
         ...TRIANGLE_OPTIONS,
         fill: selectedObjects[0]?.get('fill') as string  ?? fillColor,
         strokeWidth: strokeWidth,
-        stroke: strokeColor,
+        stroke: selectedObjects[0]?.get('stroke') as string  ?? strokeColor,
       }
     )
     addToCanvas(object)
@@ -162,7 +162,7 @@ return {
         ...DIAMOND_OPTIONS,
         fill: selectedObjects[0]?.get('fill') as string  ?? fillColor,
         strokeWidth: strokeWidth,
-        stroke: strokeColor,
+        stroke: selectedObjects[0]?.get('stroke') as string  ?? strokeColor,
       }
     )
     addToCanvas(object)
@@ -181,7 +181,18 @@ return {
 
   },
 
-  strokeColor,
+   getActiveStrokeColor:()=>{
+  const selectedObject=selectedObjects.at(-1);
+  
+  if(!selectedObject)
+    return strokeColor;
+
+  const value = selectedObject.get('stroke') || strokeColor
+
+  //currenlty gradients and patterns are not supported as our method rgbatostring is converting to strings 
+  return value as string
+
+  },
   strokeWidth,
   selectedObjects
 }
