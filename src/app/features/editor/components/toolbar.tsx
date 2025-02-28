@@ -5,6 +5,7 @@ import { ActiveTool, Editor } from "../types"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { BsBorderWidth } from "react-icons/bs"
+import { ArrowDown, ArrowUp } from "lucide-react"
 
 interface ToolBarProps{
     editor:Editor|undefined
@@ -80,7 +81,31 @@ console.log("fillcolro is",fillColor);
               variant="ghost"
               className={cn(activeTool == 'stroke-width' && 'bg-muted')}
             >
-              <BsBorderWidth className="size-4"/>
+              <BsBorderWidth className="size-4" />
+            </Button>
+          </Hint>
+        </div>
+        <div className="flex items-center h-full justify-center">
+          <Hint label="bring forward" side="bottom" sideoffset={5}>
+            <Button
+              onClick={() => editor?.bringForward()}
+              size="icon"
+              variant="ghost"
+              className={cn(activeTool == 'stroke-width' && 'bg-muted')}
+            >
+              <ArrowUp className="size-4" />
+            </Button>
+          </Hint>
+        </div>
+        <div className="flex items-center h-full justify-center">
+          <Hint label="send backward" side="bottom" sideoffset={5}>
+            <Button
+              onClick={() =>editor?.sendBackward()}
+              size="icon"
+              variant="ghost"
+              className={cn(activeTool == 'stroke-width' && 'bg-muted')}
+            >
+              <ArrowDown className="size-4" />
             </Button>
           </Hint>
         </div>

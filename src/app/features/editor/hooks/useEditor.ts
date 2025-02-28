@@ -40,6 +40,35 @@ const buildEditor = ({
 
   // console.log("inside");
   return {
+
+    bringForward:()=>{
+     canvas.getActiveObjects().forEach(object =>{ 
+      object.bringForward()
+     }
+     );
+     canvas.renderAll();
+    },
+    sendBackward:()=>{
+      canvas.getActiveObjects().forEach((object) => {
+        object.sendBackwards()
+      })
+      canvas.renderAll()
+
+      const workSpace = getWorkspace()
+
+      //the problem we are facing is when we do sendbackward shape move downbelow workspace
+      //thats why we want the last one to be workspace in the layers of stack 
+
+    //  const canvas = new fabric.Canvas(canvasRef.current, {
+    //    controlsAboveOverlay: true,
+    //    preserveObjectStacking: true,
+    //  })
+
+    //here if you turn off the preserveobjecttaking then we got the that functinality the one we selectt 
+    //will come to top of stack what it just visually appears to be at top what in reality its not chaning 
+    //the position layer wise so we have use this manuall apppraoch 
+      workSpace?.sendToBack()
+    },
     changeFillColor: (value: string) => {
       console.log('inside changefillcolor')
       console.log(value)

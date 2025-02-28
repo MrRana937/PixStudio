@@ -95,6 +95,8 @@ export type ActiveTool =
   }
 
   export interface Editor {
+    bringForward: () => void
+    sendBackward: () => void
     changeFillColor: (value: string) => void
     changeStrokeWidth: (value: number) => void
     changeStrokeColor: (value: string) => void
@@ -109,7 +111,7 @@ export type ActiveTool =
     getActiveFillColor: () => string
     getActiveStrokeColor: () => string
     getActiveStrokeWidth: () => number
-    getActiveStrokeDashArray:()=>number[]
+    getActiveStrokeDashArray: () => number[]
     selectedObjects: fabric.Object[]
   }
 
