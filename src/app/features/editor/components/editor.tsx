@@ -11,6 +11,7 @@ import { ActiveTool, selectiondDependentTools } from "../types";
 import { ShapeSideBar } from "./shape-sidebar";
 import { FillColorSideBar } from "./fill-color-sidebar";
 import { StrokeColorSideBar } from "./stroke-color-sidebar";
+import { StrokeWidthSideBar } from "./storke-width-sidebar";
 
 export default function Editor() {
 
@@ -31,7 +32,7 @@ export default function Editor() {
    setActiveTool(tool)
   }, [activeTool])
 
-  
+
   const onClearSelectoin=useCallback(()=>{
       console.log(activeTool);
      if(selectiondDependentTools.includes(activeTool))
@@ -89,6 +90,11 @@ export default function Editor() {
             onChangeActiveTool={onChangeActiveTool}
           />
           <StrokeColorSideBar
+            editor={editor}
+            activeTool={activeTool}
+            onChangeActiveTool={onChangeActiveTool}
+          />
+          <StrokeWidthSideBar 
             editor={editor}
             activeTool={activeTool}
             onChangeActiveTool={onChangeActiveTool}
