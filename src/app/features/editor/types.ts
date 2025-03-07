@@ -95,6 +95,8 @@ export type ActiveTool =
   }
 
   export interface Editor {
+    getActiveOpacity:()=>void
+    changeOpacity:(value:number)=>void
     bringForward: () => void
     sendBackward: () => void
     changeFillColor: (value: string) => void
@@ -127,4 +129,6 @@ export type ActiveTool =
     selectedObjects: fabric.Object[]
     strokeDashArray: number[]
     setStrokeDashArray: (value: number[]) => void
+    opacity:number,
+    setOpacity:(value:number)=>void
   }

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { BsBorderWidth } from "react-icons/bs"
 import { ArrowDown, ArrowUp } from "lucide-react"
+import {RxTransparencyGrid} from "react-icons/rx"
 
 interface ToolBarProps{
     editor:Editor|undefined
@@ -33,7 +34,7 @@ export const Toolbar=({
      const strokeColor=editor?.getActiveStrokeColor();
 //   console.log(typeof(fillColor),fillColor);
 
-console.log("fillcolro is",fillColor);
+// console.log("fillcolro is",fillColor);
     return (
       <div className="shrink-0 h-[56px] border-b bg-white w-full flex items-center overflow-x-auto z-[49] p-2 gap-x-2">
         <div className="flex items-center h-full justify-center">
@@ -91,7 +92,6 @@ console.log("fillcolro is",fillColor);
               onClick={() => editor?.bringForward()}
               size="icon"
               variant="ghost"
-              className={cn(activeTool == 'stroke-width' && 'bg-muted')}
             >
               <ArrowUp className="size-4" />
             </Button>
@@ -100,12 +100,23 @@ console.log("fillcolro is",fillColor);
         <div className="flex items-center h-full justify-center">
           <Hint label="send backward" side="bottom" sideoffset={5}>
             <Button
-              onClick={() =>editor?.sendBackward()}
+              onClick={() => editor?.sendBackward()}
               size="icon"
               variant="ghost"
-              className={cn(activeTool == 'stroke-width' && 'bg-muted')}
             >
               <ArrowDown className="size-4" />
+            </Button>
+          </Hint>
+        </div>
+        <div className="flex items-center h-full justify-center">
+          <Hint label="opacity" side="bottom" sideoffset={5}>
+            <Button
+              onClick={() => onChangeActiveTool('opacity')}
+              size="icon"
+              variant="ghost"
+              className={cn(activeTool == 'opacity' && 'bg-gray-100')}
+            >
+              <RxTransparencyGrid className="size-4" />
             </Button>
           </Hint>
         </div>

@@ -17,6 +17,8 @@ const buildEditor = ({
   selectedObjects,
   strokeDashArray,
   setStrokeDashArray,
+  opacity,
+  setOpacity
 }: BuildEditorProps): Editor => {
   const getWorkspace = () => {
     return canvas.getObjects().find((object) => object.name === 'clip')
@@ -41,6 +43,27 @@ const buildEditor = ({
   // console.log("inside");
   return {
 
+
+    getActiveOpacity:()=>{
+      // console.log("inside active opacity",opacity);
+        const selectedObject = selectedObjects.at(-1)
+
+        if (!selectedObject) return opacity;
+
+        const value = selectedObject.get('opacity') || opacity
+
+        //currenlty gradients and patterns are not supported as our method rgbatostring is converting to strings
+        return value;
+
+    },
+    changeOpacity:(value:number)=>{
+      setOpacity(value);
+     canvas.getActiveObjects().forEach(object => {
+       object.set({opacity:value}); 
+     });
+
+     canvas.renderAll();
+    },
     bringForward:()=>{
      canvas.getActiveObjects().forEach(object =>{ 
       object.bringForward()
@@ -252,6 +275,7 @@ export const useEditor = ({clearSelectionCallback}:EditorHookProps) => {
         const [strokeColor,setStrokeColor]=useState<string>(STROKE_COLOR);
         const [strokeWidth,setStrokeWidth]=useState<number>(STROKE_WIDTH);
         const [strokeDashArray,setStrokeDashArray] =useState<number[]>(STROKE_DASH_ARRAY);
+        const [opacity,setOpacity]=useState<number>(1);
 
     useAutoResize({canvas,container});
 
@@ -275,10 +299,12 @@ export const useEditor = ({clearSelectionCallback}:EditorHookProps) => {
           selectedObjects,
           strokeDashArray,
           setStrokeDashArray,
+          opacity,
+          setOpacity
         })
       }
       return undefined
-    }, [canvas, fillColor, strokeColor, strokeWidth,selectedObjects,strokeDashArray])
+    }, [canvas, fillColor, strokeColor, strokeWidth,selectedObjects,strokeDashArray,opacity])
 
     const init = useCallback( ({
         initialCanvas,
