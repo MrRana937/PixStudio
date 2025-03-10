@@ -13,6 +13,7 @@ import { FillColorSideBar } from "./fill-color-sidebar";
 import { StrokeColorSideBar } from "./stroke-color-sidebar";
 import { StrokeWidthSideBar } from "./storke-width-sidebar";
 import { OpacitySideBar } from "./opacity-sidebar";
+import { TextSideBar } from "./text-sidebar";
 
 export default function Editor() {
 
@@ -102,6 +103,11 @@ export default function Editor() {
             onChangeActiveTool={onChangeActiveTool}
           />
           <OpacitySideBar
+            editor={editor}
+            activeTool={activeTool}
+            onChangeActiveTool={onChangeActiveTool}
+          />
+          <TextSideBar
             editor={editor}
             activeTool={activeTool}
             onChangeActiveTool={onChangeActiveTool}

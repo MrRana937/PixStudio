@@ -1,4 +1,5 @@
 import {fabric} from "fabric";
+import { ITextboxOptions } from "fabric/fabric-impl";
 
 import * as material from "material-colors"
 
@@ -49,6 +50,8 @@ export type ActiveTool =
   export const STROKE_COLOR = "rgba(0,0,0,1)"
   export const STROKE_WIDTH =2
   export const STROKE_DASH_ARRAY=[];
+  export const FONT_FAMILy="Arial";
+  export const FONT_SIZE=32
 
   export const CIRCLE_OPTIONS = {
     height: 400,
@@ -90,11 +93,24 @@ export type ActiveTool =
    angle: 0,
  }
 
+
+
+ export const TEXT_OPTIONS = {
+   type:"textbox",
+   left: 100,
+   top: 100,
+   fill: FILL_COLOR,
+   fontFamily:FONT_FAMILy,
+   fontSize:FONT_SIZE,
+   angle: 0,
+ }
+
   export interface EditorHookProps{
     clearSelectionCallback?:()=>void
   }
 
   export interface Editor {
+    addText:(value:string,options?:ITextboxOptions)=>void
     getActiveOpacity:()=>void
     changeOpacity:(value:number)=>void
     bringForward: () => void

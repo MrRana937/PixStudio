@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { useRef } from 'react'
 import { fabric } from 'fabric'
 import { useAutoResize } from './useAutoResize'
-import { BuildEditorProps, CIRCLE_OPTIONS, DIAMOND_OPTIONS, Editor, EditorHookProps, FILL_COLOR, RECTANGLE_OPTIONS, STROKE_COLOR, STROKE_DASH_ARRAY, STROKE_WIDTH, TRIANGLE_OPTIONS } from '@/app/features/editor/types'
+import { BuildEditorProps, CIRCLE_OPTIONS, DIAMOND_OPTIONS, Editor, EditorHookProps, FILL_COLOR, RECTANGLE_OPTIONS, STROKE_COLOR, STROKE_DASH_ARRAY, STROKE_WIDTH, TEXT_OPTIONS, TRIANGLE_OPTIONS } from '@/app/features/editor/types'
 import { useCanvasEvents } from './useCanvasEvents'
 import { isTextType } from '@/app/features/editor/utils'
 
@@ -42,6 +42,16 @@ const buildEditor = ({
 
   // console.log("inside");
   return {
+
+   addText:(value,options)=>{
+    const object= new fabric.Textbox(value,{
+      ...TEXT_OPTIONS,
+      fill:fillColor,
+      ...options
+    })
+   addToCanvas(object)
+
+   },
 
 
     getActiveOpacity:()=>{
