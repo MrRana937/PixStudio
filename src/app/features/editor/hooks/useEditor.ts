@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { useRef } from 'react'
 import { fabric } from 'fabric'
 import { useAutoResize } from './useAutoResize'
-import { BuildEditorProps, CIRCLE_OPTIONS, DIAMOND_OPTIONS, Editor, EditorHookProps, FILL_COLOR, RECTANGLE_OPTIONS, STROKE_COLOR, STROKE_DASH_ARRAY, STROKE_WIDTH, TEXT_OPTIONS, TRIANGLE_OPTIONS } from '@/app/features/editor/types'
+import { BuildEditorProps, CIRCLE_OPTIONS, DIAMOND_OPTIONS, Editor, EditorHookProps, FILL_COLOR, FONT_FAMILY, RECTANGLE_OPTIONS, STROKE_COLOR, STROKE_DASH_ARRAY, STROKE_WIDTH, TEXT_OPTIONS, TRIANGLE_OPTIONS } from '@/app/features/editor/types'
 import { useCanvasEvents } from './useCanvasEvents'
 import { isTextType } from '@/app/features/editor/utils'
 
@@ -18,7 +18,9 @@ const buildEditor = ({
   strokeDashArray,
   setStrokeDashArray,
   opacity,
-  setOpacity
+  setOpacity,
+  fontFamily,
+  setFontFamily
 }: BuildEditorProps): Editor => {
   const getWorkspace = () => {
     return canvas.getObjects().find((object) => object.name === 'clip')
@@ -42,46 +44,57 @@ const buildEditor = ({
 
   // console.log("inside");
   return {
+    changeFontFamily: (value: string) => {
+      setFontFamily(value)
+      canvas.getActiveObjects().forEach((object) => {
+      //@ts-ignore
+      //funxtion exists 
+        object.set("fontFamily", value )
+      })
+      canvas.renderAll()
+    },
+    getActiveFontFamily:()=>{
+      const selectedObject = selectedObjects.at(-1)
+      if (!selectedObject) return fontFamily
+      //@ts-ignore
+      const value = selectedObject.get('fontFamily') || fontFamily
+      return value 
+    },
 
-   addText:(value,options)=>{
-    const object= new fabric.Textbox(value,{
-      ...TEXT_OPTIONS,
-      fill:fillColor,
-      ...options
-    })
-   addToCanvas(object)
-
-   },
-
-
-    getActiveOpacity:()=>{
+    addText: (value, options) => {
+      const object = new fabric.Textbox(value, {
+        ...TEXT_OPTIONS,
+        fill: fillColor,
+        ...options,
+      })
+      addToCanvas(object)
+    },
+    getActiveOpacity: () => {
       // console.log("inside active opacity",opacity);
-        const selectedObject = selectedObjects.at(-1)
+      const selectedObject = selectedObjects.at(-1)
 
-        if (!selectedObject) return opacity;
+      if (!selectedObject) return opacity
 
-        const value = selectedObject.get('opacity') || opacity
+      const value = selectedObject.get('opacity') || opacity
 
-        //currenlty gradients and patterns are not supported as our method rgbatostring is converting to strings
-        return value;
-
+      //currenlty gradients and patterns are not supported as our method rgbatostring is converting to strings
+      return value
     },
-    changeOpacity:(value:number)=>{
-      setOpacity(value);
-     canvas.getActiveObjects().forEach(object => {
-       object.set({opacity:value}); 
-     });
+    changeOpacity: (value: number) => {
+      setOpacity(value)
+      canvas.getActiveObjects().forEach((object) => {
+        object.set({ opacity: value })
+      })
 
-     canvas.renderAll();
+      canvas.renderAll()
     },
-    bringForward:()=>{
-     canvas.getActiveObjects().forEach(object =>{ 
-      object.bringForward()
-     }
-     );
-     canvas.renderAll();
+    bringForward: () => {
+      canvas.getActiveObjects().forEach((object) => {
+        object.bringForward()
+      })
+      canvas.renderAll()
     },
-    sendBackward:()=>{
+    sendBackward: () => {
       canvas.getActiveObjects().forEach((object) => {
         object.sendBackwards()
       })
@@ -90,16 +103,16 @@ const buildEditor = ({
       const workSpace = getWorkspace()
 
       //the problem we are facing is when we do sendbackward shape move downbelow workspace
-      //thats why we want the last one to be workspace in the layers of stack 
+      //thats why we want the last one to be workspace in the layers of stack
 
-    //  const canvas = new fabric.Canvas(canvasRef.current, {
-    //    controlsAboveOverlay: true,
-    //    preserveObjectStacking: true,
-    //  })
+      //  const canvas = new fabric.Canvas(canvasRef.current, {
+      //    controlsAboveOverlay: true,
+      //    preserveObjectStacking: true,
+      //  })
 
-    //here if you turn off the preserveobjecttaking then we got the that functinality the one we selectt 
-    //will come to top of stack what it just visually appears to be at top what in reality its not chaning 
-    //the position layer wise so we have use this manuall apppraoch 
+      //here if you turn off the preserveobjecttaking then we got the that functinality the one we selectt
+      //will come to top of stack what it just visually appears to be at top what in reality its not chaning
+      //the position layer wise so we have use this manuall apppraoch
       workSpace?.sendToBack()
     },
     changeFillColor: (value: string) => {
@@ -286,6 +299,7 @@ export const useEditor = ({clearSelectionCallback}:EditorHookProps) => {
         const [strokeWidth,setStrokeWidth]=useState<number>(STROKE_WIDTH);
         const [strokeDashArray,setStrokeDashArray] =useState<number[]>(STROKE_DASH_ARRAY);
         const [opacity,setOpacity]=useState<number>(1);
+        const [fontFamily,setFontFamily]= useState<string>(FONT_FAMILY)
 
     useAutoResize({canvas,container});
 
@@ -310,7 +324,9 @@ export const useEditor = ({clearSelectionCallback}:EditorHookProps) => {
           strokeDashArray,
           setStrokeDashArray,
           opacity,
-          setOpacity
+          setOpacity,
+          fontFamily,
+          setFontFamily
         })
       }
       return undefined

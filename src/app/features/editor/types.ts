@@ -43,6 +43,29 @@ export type ActiveTool =
   | 'templates';
 
 
+  export const fonts = [
+    'Arial',
+    'Arial Black',
+    'Verdana',
+    'Helvetica',
+    'Tahoma',
+    'Trebuchet MS',
+    'Times New Roman',
+    'Georgia',
+    'Garamond',
+    'Courier New',
+    'Brush Script MT',
+    'Palatino',
+    'Bookman',
+    'Comic Sans MS',
+    'Impact',
+    'Lucida Sans Unicode',
+    'Geneva',
+    'Lucida Console',
+  ]
+
+
+
   export const selectiondDependentTools=  ["fill" ,"font","filter","opacity","remoe-bg","stroke-color","stroke-width"];
 
   
@@ -50,7 +73,7 @@ export type ActiveTool =
   export const STROKE_COLOR = "rgba(0,0,0,1)"
   export const STROKE_WIDTH =2
   export const STROKE_DASH_ARRAY=[];
-  export const FONT_FAMILy="Arial";
+  export const FONT_FAMILY="Arial";
   export const FONT_SIZE=32
 
   export const CIRCLE_OPTIONS = {
@@ -100,7 +123,7 @@ export type ActiveTool =
    left: 100,
    top: 100,
    fill: FILL_COLOR,
-   fontFamily:FONT_FAMILy,
+   fontFamily:FONT_FAMILY,
    fontSize:FONT_SIZE,
    angle: 0,
  }
@@ -110,6 +133,8 @@ export type ActiveTool =
   }
 
   export interface Editor {
+    changeFontFamily:(value:string)=>void
+    getActiveFontFamily:()=>string
     addText:(value:string,options?:ITextboxOptions)=>void
     getActiveOpacity:()=>void
     changeOpacity:(value:number)=>void
@@ -147,4 +172,6 @@ export type ActiveTool =
     setStrokeDashArray: (value: number[]) => void
     opacity:number,
     setOpacity:(value:number)=>void
+    fontFamily:string,
+    setFontFamily:(value:string)=>void
   }
