@@ -75,6 +75,7 @@ export type ActiveTool =
   export const STROKE_DASH_ARRAY=[];
   export const FONT_FAMILY="Arial";
   export const FONT_SIZE=32
+  export const FONT_WEIGHT=400
 
   export const CIRCLE_OPTIONS = {
     height: 400,
@@ -133,6 +134,8 @@ export type ActiveTool =
   }
 
   export interface Editor {
+    changeFontWeight:(value:number)=>void
+    getActiveFontWeight:()=>number
     changeFontFamily:(value:string)=>void
     getActiveFontFamily:()=>string
     addText:(value:string,options?:ITextboxOptions)=>void

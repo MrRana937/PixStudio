@@ -1,13 +1,14 @@
 "use client"
 
 import { Hint } from "@/components/customui/hint"
-import { ActiveTool, Editor } from "../types"
+import { ActiveTool, Editor, FONT_WEIGHT } from "../types"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { BsBorderWidth } from "react-icons/bs"
 import { ArrowDown, ArrowUp, ChevronDown } from "lucide-react"
 import {RxTransparencyGrid} from "react-icons/rx"
 import { isTextType } from "../utils"
+import { FaBold } from "react-icons/fa6"
 
 interface ToolBarProps{
     editor:Editor|undefined
@@ -24,7 +25,7 @@ export const Toolbar=({
   const selectedObject=editor?.selectedObjects.at(-1);
   const isText=isTextType(selectedObject?.type);
   const fontFamily=editor?.getActiveFontFamily();
-
+  const fontWeight=editor?.getActiveFontWeight() || FONT_WEIGHT
   console.log(isText);
 //   const getProperty=(property:any)=>{
 //     if(!selectedObject)
@@ -39,6 +40,21 @@ export const Toolbar=({
 //   console.log(typeof(fillColor),fillColor);
 
 // console.log("fillcolro is",fillColor);
+
+
+ const toogleBold=()=>{
+  
+  const selectedObject=editor?.selectedObjects.at(-1)
+  if(!selectedObject)
+    return;
+
+  let newValue= fontWeight>500?500:700
+  console.log('insdide tooglebold',fontWeight, newValue)
+  editor?.changeFontWeight(newValue);
+ }
+
+
+
     return (
       <div className="shrink-0 h-[56px] border-b bg-white w-full flex items-center overflow-x-auto z-[49] p-2 gap-x-2">
         <div className="flex items-center h-full justify-center">
@@ -102,12 +118,30 @@ export const Toolbar=({
                 onClick={() => onChangeActiveTool('font')}
                 size="icon"
                 variant="ghost"
-                className={cn("w-auto px-2 text-sm",activeTool == 'font' && 'bg-muted')}
+                className={cn(
+                  'w-auto px-2 text-sm',
+                  activeTool == 'font' && 'bg-muted'
+                )}
               >
-                <div className="max-w-[100px] truncate">
-                 {fontFamily}
-                </div>
-                <ChevronDown className="size-4 ml-2 shrink-0"/>
+                <div className="max-w-[100px] truncate">{fontFamily}</div>
+                <ChevronDown className="size-4 ml-2 shrink-0" />
+              </Button>
+            </Hint>
+          </div>
+        )}
+
+        {isText && (
+          <div className="flex items-center h-full justify-center">
+            <Hint label="bold" side="bottom" sideoffset={5}>
+              <Button
+                onClick={toogleBold}
+                size="icon"
+                variant="ghost"
+                className={cn(
+                  fontWeight> 500 && "bg-gray-100"
+                )}
+              >
+                <FaBold className="size-4"/>
               </Button>
             </Hint>
           </div>

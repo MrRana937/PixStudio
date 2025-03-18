@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { useRef } from 'react'
 import { fabric } from 'fabric'
 import { useAutoResize } from './useAutoResize'
-import { BuildEditorProps, CIRCLE_OPTIONS, DIAMOND_OPTIONS, Editor, EditorHookProps, FILL_COLOR, FONT_FAMILY, RECTANGLE_OPTIONS, STROKE_COLOR, STROKE_DASH_ARRAY, STROKE_WIDTH, TEXT_OPTIONS, TRIANGLE_OPTIONS } from '@/app/features/editor/types'
+import { BuildEditorProps, CIRCLE_OPTIONS, DIAMOND_OPTIONS, Editor, EditorHookProps, FILL_COLOR, FONT_FAMILY, FONT_WEIGHT, RECTANGLE_OPTIONS, STROKE_COLOR, STROKE_DASH_ARRAY, STROKE_WIDTH, TEXT_OPTIONS, TRIANGLE_OPTIONS } from '@/app/features/editor/types'
 import { useCanvasEvents } from './useCanvasEvents'
 import { isTextType } from '@/app/features/editor/utils'
 
@@ -44,21 +44,43 @@ const buildEditor = ({
 
   // console.log("inside");
   return {
+    changeFontWeight: (value: number) => {
+
+      canvas.getActiveObjects().forEach((object) => {
+          if (isTextType(object.type))
+            {
+              //@ts-ignore
+               object.set({ fontWeight: value })
+            }
+      })
+
+      canvas.renderAll()
+    },
+
     changeFontFamily: (value: string) => {
       setFontFamily(value)
       canvas.getActiveObjects().forEach((object) => {
-      //@ts-ignore
-      //funxtion exists 
-        object.set("fontFamily", value )
+        //@ts-ignore
+        //funxtion exists
+        object.set('fontFamily', value)
       })
       canvas.renderAll()
     },
-    getActiveFontFamily:()=>{
+
+    getActiveFontWeight: () => {
+      const selectedObject = selectedObjects.at(-1)
+      if (!selectedObject) return FONT_WEIGHT
+      //@ts-ignore
+      const value = selectedObject.get('fontWeight') || FONT_WEIGHT
+      return value
+    },
+
+    getActiveFontFamily: () => {
       const selectedObject = selectedObjects.at(-1)
       if (!selectedObject) return fontFamily
       //@ts-ignore
       const value = selectedObject.get('fontFamily') || fontFamily
-      return value 
+      return value
     },
 
     addText: (value, options) => {
