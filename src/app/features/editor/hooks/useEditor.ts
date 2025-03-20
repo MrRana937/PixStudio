@@ -44,14 +44,65 @@ const buildEditor = ({
 
   // console.log("inside");
   return {
-    changeFontWeight: (value: number) => {
-
+    changeFontUnderline: (value: boolean) => {
       canvas.getActiveObjects().forEach((object) => {
-          if (isTextType(object.type))
-            {
-              //@ts-ignore
-               object.set({ fontWeight: value })
-            }
+        if (isTextType(object.type)) {
+          //@ts-ignore
+          object.set({ underline: value })
+        }
+      })
+
+      canvas.renderAll()
+    },
+    getActiveFontUnderline: () => {
+      const selectedObject = selectedObjects.at(-1)
+      if (!selectedObject) return false
+      //@ts-ignore
+      const value = selectedObject.get('underline') || false
+      return value
+    },
+    changeFontLinethrough: (value: boolean) => {
+      canvas.getActiveObjects().forEach((object) => {
+        if (isTextType(object.type)) {
+          //@ts-ignore
+          object.set({ linethrough: value })
+        }
+      })
+
+      canvas.renderAll()
+    },
+    getActiveFontLinethrough: () => {
+      const selectedObject = selectedObjects.at(-1)
+      if (!selectedObject) return false
+      //@ts-ignore
+      const value = selectedObject.get('linethrough') || false
+      return value
+    },
+    changeFontStyle: (value: string) => {
+      canvas.getActiveObjects().forEach((object) => {
+        if (isTextType(object.type)) {
+          //@ts-ignore
+          object.set({ fontStyle: value })
+        }
+      })
+
+      canvas.renderAll()
+    },
+
+    getActiveFontStyle: () => {
+      const selectedObject = selectedObjects.at(-1)
+      if (!selectedObject) return 'normal'
+      //@ts-ignore
+      const value = selectedObject.get('fontStyle') || 'normal'
+      return value
+    },
+
+    changeFontWeight: (value: number) => {
+      canvas.getActiveObjects().forEach((object) => {
+        if (isTextType(object.type)) {
+          //@ts-ignore
+          object.set({ fontWeight: value })
+        }
       })
 
       canvas.renderAll()

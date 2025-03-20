@@ -134,6 +134,12 @@ export type ActiveTool =
   }
 
   export interface Editor {
+    getActiveFontLinethrough:()=>boolean,
+    getActiveFontUnderline:()=>boolean
+    changeFontLinethrough:(value:boolean)=>void
+    changeFontUnderline:(value:boolean)=>void
+    changeFontStyle:(value:string)=>void
+    getActiveFontStyle:()=>string
     changeFontWeight:(value:number)=>void
     getActiveFontWeight:()=>number
     changeFontFamily:(value:string)=>void
