@@ -134,19 +134,21 @@ export type ActiveTool =
   }
 
   export interface Editor {
-    getActiveFontLinethrough:()=>boolean,
-    getActiveFontUnderline:()=>boolean
-    changeFontLinethrough:(value:boolean)=>void
-    changeFontUnderline:(value:boolean)=>void
-    changeFontStyle:(value:string)=>void
-    getActiveFontStyle:()=>string
-    changeFontWeight:(value:number)=>void
-    getActiveFontWeight:()=>number
-    changeFontFamily:(value:string)=>void
-    getActiveFontFamily:()=>string
-    addText:(value:string,options?:ITextboxOptions)=>void
-    getActiveOpacity:()=>void
-    changeOpacity:(value:number)=>void
+    getActiveTextAlign: () => string
+    changeTextAlign: (value: string) => void
+    getActiveFontLinethrough: () => boolean
+    getActiveFontUnderline: () => boolean
+    changeFontLinethrough: (value: boolean) => void
+    changeFontUnderline: (value: boolean) => void
+    changeFontStyle: (value: string) => void
+    getActiveFontStyle: () => string
+    changeFontWeight: (value: number) => void
+    getActiveFontWeight: () => number
+    changeFontFamily: (value: string) => void
+    getActiveFontFamily: () => string
+    addText: (value: string, options?: ITextboxOptions) => void
+    getActiveOpacity: () => void
+    changeOpacity: (value: number) => void
     bringForward: () => void
     sendBackward: () => void
     changeFillColor: (value: string) => void

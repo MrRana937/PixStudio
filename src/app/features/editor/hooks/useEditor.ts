@@ -44,6 +44,23 @@ const buildEditor = ({
 
   // console.log("inside");
   return {
+    changeTextAlign: (value: string) => {
+      canvas.getActiveObjects().forEach((object) => {
+        if (isTextType(object.type)) {
+          //@ts-ignore
+          object.set({ textAlign: value })
+        }
+      })
+
+      canvas.renderAll()
+    },
+    getActiveTextAlign: () => {
+      const selectedObject = selectedObjects.at(-1)
+      if (!selectedObject) return "left"
+      //@ts-ignore
+      const value = selectedObject.get('textAlign') || "left"
+      return value
+    },
     changeFontUnderline: (value: boolean) => {
       canvas.getActiveObjects().forEach((object) => {
         if (isTextType(object.type)) {
