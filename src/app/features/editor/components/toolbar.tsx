@@ -1,7 +1,7 @@
 "use client"
 
 import { Hint } from "@/components/customui/hint"
-import { ActiveTool, Editor, FONT_WEIGHT } from "../types"
+import { ActiveTool, Editor, FONT_SIZE, FONT_WEIGHT } from "../types"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { BsBorderWidth } from "react-icons/bs"
@@ -35,6 +35,7 @@ export const Toolbar=({
  const initialFontLinethrough=editor?.getActiveFontLinethrough()
  const initialFontUnderliine=editor?.getActiveFontUnderline()
  const initialTextAlign=editor?.getActiveTextAlign()
+ const initialFontSize=editor?.getActiveFontSize()||FONT_SIZE
 
 
  const [properites,setProperties]= useState({
@@ -45,9 +46,20 @@ export const Toolbar=({
   fontStyle:inititalFontStyle,
   fontLinethrough:initialFontLinethrough,
   fontUnderline:initialFontUnderliine,
-  textAlign:initialTextAlign
+  textAlign:initialTextAlign,
+  fontSize:initialFontSize
  })
 
+
+ const onChageFontSize=(value:number)=>{
+
+  if(!selectedObject)
+    return ;
+
+  editor?.changeFontSize(value);
+  setProperties((current)=>(
+    {...current,fontSize:value}))
+ }
 
  
  const toogleLinethrough = () => {
@@ -285,7 +297,8 @@ export const Toolbar=({
         {isText && (
           <div className="flex items-center h-full justify-center">
           <FontSizeInput
-          
+          value={properites?.fontSize}
+          onChange={onChageFontSize}
           />
           </div>
         )}

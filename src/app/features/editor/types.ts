@@ -134,6 +134,8 @@ export type ActiveTool =
   }
 
   export interface Editor {
+    changeFontSize:(value:number)=>void, 
+    getActiveFontSize:()=>number
     getActiveTextAlign: () => string
     changeTextAlign: (value: string) => void
     getActiveFontLinethrough: () => boolean
