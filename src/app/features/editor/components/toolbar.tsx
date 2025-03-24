@@ -10,6 +10,7 @@ import {RxTransparencyGrid} from "react-icons/rx"
 import { isTextType } from "../utils"
 import { FaBold, FaItalic, FaStrikethrough, FaUnderline } from "react-icons/fa6"
 import { useState } from "react"
+import { FontSizeInput } from "./fontsizeinput"
 
 interface ToolBarProps{
     editor:Editor|undefined
@@ -242,7 +243,7 @@ export const Toolbar=({
                 onClick={() => changeTextAlign('left')}
                 size="icon"
                 variant="ghost"
-                className={cn(properites.textAlign==="left" && 'bg-gray-100')}
+                className={cn(properites.textAlign === 'left' && 'bg-gray-100')}
               >
                 <AlignLeft className="size-4" />
               </Button>
@@ -256,7 +257,9 @@ export const Toolbar=({
                 onClick={() => changeTextAlign('right')}
                 size="icon"
                 variant="ghost"
-                className={cn(properites.textAlign==="right" && 'bg-gray-100')}
+                className={cn(
+                  properites.textAlign === 'right' && 'bg-gray-100'
+                )}
               >
                 <AlignRight className="size-4" />
               </Button>
@@ -270,11 +273,20 @@ export const Toolbar=({
                 onClick={() => changeTextAlign('center')}
                 size="icon"
                 variant="ghost"
-                className={cn(properites.textAlign=="center" && 'bg-gray-100')}
+                className={cn(
+                  properites.textAlign == 'center' && 'bg-gray-100'
+                )}
               >
                 <AlignCenter className="size-4" />
               </Button>
             </Hint>
+          </div>
+        )}
+        {isText && (
+          <div className="flex items-center h-full justify-center">
+          <FontSizeInput
+          
+          />
           </div>
         )}
 
