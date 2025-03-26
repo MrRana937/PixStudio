@@ -42,7 +42,7 @@ const buildEditor = ({
     canvas.setActiveObject(object)
   }
 
-  // console.log("inside");
+  console.log("inside");
   return {
     changeFontSize: (value: number) => {
       canvas.getActiveObjects().forEach((object) => {
