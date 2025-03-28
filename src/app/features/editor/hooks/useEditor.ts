@@ -44,6 +44,14 @@ const buildEditor = ({
 
   console.log("inside");
   return {
+
+
+   delete:()=>{
+    console.log("delete triggerd");
+    canvas.getActiveObjects().forEach(object => canvas.remove(object));
+    canvas.discardActiveObject();
+    canvas.renderAll();
+   }, 
     changeFontSize: (value: number) => {
       canvas.getActiveObjects().forEach((object) => {
         if (isTextType(object.type)) {

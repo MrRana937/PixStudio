@@ -134,6 +134,7 @@ export type ActiveTool =
   }
 
   export interface Editor {
+    delete:()=>void
     changeFontSize:(value:number)=>void, 
     getActiveFontSize:()=>number
     getActiveTextAlign: () => string
