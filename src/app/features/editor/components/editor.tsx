@@ -15,6 +15,7 @@ import { StrokeWidthSideBar } from "./storke-width-sidebar";
 import { OpacitySideBar } from "./opacity-sidebar";
 import { TextSideBar } from "./text-sidebar";
 import { FontSideBar } from "./font-sidebar";
+import { ImageSidebar } from "./image-sidebar";
 
 export default function Editor() {
 
@@ -119,6 +120,12 @@ export default function Editor() {
             activeTool={activeTool}
             onChangeActiveTool={onChangeActiveTool}
           />
+          <ImageSidebar 
+            editor={editor}
+            activeTool={activeTool}
+            onChangeActiveTool={onChangeActiveTool}
+          />
+
 
           <main className=" bg-muted flex-1 overflow-auto relative flex flex-col">
             <Toolbar

@@ -1,14 +1,13 @@
 import {Hono} from 'hono';
 import {handle} from 'hono/vercel'
-import user from './user'
 export const runtime ="nodejs"
-
+import images from "./images"
 
 
 const app = new Hono().basePath('/api');
 
 
-const routes=app.route("/user",user)
+const routes=app.route("/images",images)
 
 
 //as route is reserved keyword and its expect either get post put delte 
